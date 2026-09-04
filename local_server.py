@@ -105,7 +105,7 @@ class Handler(SimpleHTTPRequestHandler):
 
     def is_admin(self):
         row = self.current_user()
-        return bool(row and row["role"] == "admin" and row["status"] == "approved")
+        return bool(row and worker_system.is_admin_role(row["role"]) and row["status"] == "approved")
 
     def authorized(self):
         current = self.current_user()

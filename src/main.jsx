@@ -1063,7 +1063,6 @@ function Capture({
     [liveConfidence, setLiveConfidence] = useState(0);
   const autoDocument = idDocument || (!passport && !signature);
   async function openCapture() {
-    if (!isAndroidApp()) { setCameraOpen(true); return; }
     if (passport) { ref.current?.click(); return; }
     setBusy(true);
     try {
@@ -2586,6 +2585,43 @@ function PdfEmbed({ data, children }) {
 
 const money = paisa => `৳${((Number(paisa)||0)/100).toLocaleString("en-BD", {minimumFractionDigits:0,maximumFractionDigits:2})}`;
 const statusLabel = {submitted:"জমা হয়েছে",resubmitted:"আবার জমা হয়েছে",correction_required:"সংশোধন প্রয়োজন",data_approved:"Data approved",bank_processing:"Bank processing",completed:"Account completed",rejected:"বাতিল",pending:"Approval অপেক্ষায়",approved:"Approved",suspended:"Locked"};
+const isAdminRole = role => ["master_admin", "admin", "subadmin"].includes(role);
+
+function AdminUserControl({ users, reload, master }) {
+  const [form, setForm] = useState({ fullName: "", username: "", password: "", role: "worker" });
+  const [tree, setTree] = useState([]);
+  const [profile, setProfile] = useState(null);
+  async function loadTree() { const response = await fetch("/api/admin/referrals"); const result = await readJson(response); if (response.ok) setTree(result.users || []); }
+  useEffect(() => { loadTree().catch(() => {}); }, [users]);
+  async function createUser(event) {
+    event.preventDefault();
+    const response = await fetch("/api/admin/users", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
+    const result = await readJson(response);
+    if (!response.ok) return alert(result.error);
+    setForm({ fullName: "", username: "", password: "", role: "worker" }); reload(); alert("Account তৈরি হয়েছে");
+  }
+  async function openProfile(id) { const response = await fetch(`/api/admin/users/${id}/profile`); const result = await readJson(response); if (!response.ok) return alert(result.error); setProfile(result.profile); }
+  async function adjustBalance() {
+    const amount = prompt("Balance amount দিন; কমাতে negative amount দিন");
+    if (amount === null || !amount) return;
+    const reason = prompt("কারণ লিখুন");
+    if (!reason) return;
+    const response = await fetch(`/api/admin/users/${profile.id}/balance`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ amount, reason }) });
+    const result = await readJson(response);
+    if (!response.ok) return alert(result.error);
+    await openProfile(profile.id); alert("Balance update হয়েছে");
+  }
+  const byParent = parent => tree.filter(item => (item.referred_by || null) === parent);
+  function Tree({ parent = null, level = 0 }) { return <div className="referralTreeLevel">{byParent(parent).map(item => <article key={item.id} style={{ marginLeft: level * 16 }}><div><b>{item.full_name}</b><small>@{item.username} • {item.role} • {item.referral_code}</small></div><button className="recordEdit" onClick={() => openProfile(item.id)}><UserRound size={14} /> Profile</button><Tree parent={item.id} level={level + 1} /></article>)}</div>; }
+  return <>
+    <div className="adminUserGrid">
+      <form className="portalPanel adminCreateUser" onSubmit={createUser}><div className="panelTitle"><div><small>ACCOUNT CONTROL</small><h2>নতুন account তৈরি করুন</h2></div><ShieldCheck /></div><label><span>পূর্ণ নাম</span><input required value={form.fullName} onChange={e => setForm({ ...form, fullName: e.target.value })} /></label><label><span>Username</span><input required value={form.username} onChange={e => setForm({ ...form, username: e.target.value })} /></label><label><span>Password</span><input required minLength="8" type="password" value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} /></label><label><span>Account type</span><select value={form.role} onChange={e => setForm({ ...form, role: e.target.value })}><option value="worker">Worker</option>{master && <option value="subadmin">Subadmin</option>}</select></label><button className="primary full"><Plus /> Account Save করুন</button></form>
+      <section className="portalPanel adminReferralPanel"><div className="panelTitle"><div><small>REFERRAL NETWORK</small><h2>Referral Tree</h2></div><span className="codeBadge">MASTER: {"MASTER-BIPUL"}</span></div><p className="secureNotice">Master referral code: <b>MASTER-BIPUL</b></p><Tree /></section>
+    </div>
+    <section className="portalPanel"><div className="panelTitle"><div><small>ALL ACCOUNTS</small><h2>Worker ও Subadmin</h2></div></div><div className="portalTable">{users.map(item => <article key={item.id}><div><b>{item.full_name}</b><small>@{item.username} • {item.role}</small></div><div><b>{item.referral_code}</b><small>{item.phone || "Phone নেই"}</small></div><span className={`statusTag ${item.status}`}>{statusLabel[item.status] || item.status}</span><div className="rowActions"><button onClick={() => openProfile(item.id)}><UserRound /> Profile দেখুন</button></div></article>)}</div></section>
+    {profile && <div className="modalBackdrop" onMouseDown={() => setProfile(null)}><section className="settingsModal adminProfileModal" onMouseDown={e => e.stopPropagation()}><button className="modalClose" onClick={() => setProfile(null)}><X /></button><small>USER PROFILE</small><h2>{profile.full_name}</h2><p>@{profile.username} • {profile.role} • {statusLabel[profile.status] || profile.status}</p><div className="profileFacts"><article><span>Referral code</span><b>{profile.referral_code || "—"}</b></article><article><span>Available balance</span><b>{money(profile.available)}</b></article><article><span>Total earned</span><b>{money(profile.earned)}</b></article><article><span>Reserved/withdraw</span><b>{money(profile.reserved)}</b></article></div><p><b>Phone:</b> {profile.phone || "—"}<br /><b>Email:</b> {profile.email || "—"}<br /><b>Address:</b> {profile.address || "—"}</p><h3>কাজের হিসাব</h3>{profile.customers.map(item => <p className="ledgerRow" key={item.id}><span>{item.serial} — {item.name}<small>{statusLabel[item.workflow_status] || item.workflow_status}</small></span></p>)}<button className="primary full" onClick={adjustBalance}><Wallet /> Balance Add / Minus</button></section></div>}
+  </>;
+}
 
 function WorkerDetailsModal({ data, close, refresh }) {
   const [patch, setPatch] = useState({});
@@ -2665,7 +2701,8 @@ function AdminPortal({ openRecords }) {
   async function toggleAnnouncement(id){await fetch('/api/admin/announcements/'+id,{method:'PUT'});load();}
   async function saveSupport(){const r=await fetch('/api/admin/settings',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({supportWhatsApp:adminSettings.support_whatsapp})}),x=await readJson(r);alert(r.ok?'WhatsApp support Save হয়েছে':x.error);if(r.ok)load();}
   if(!dashboard)return <div className="loadingPage">Admin panel আসছে…</div>;
-  const adminMenu=[["overview",Home,"Overview"],["workers",UsersRound,"Workers"],["cases",Database,"Applications"],["finance",Wallet,"Finance"],["targets",Target,"Targets"],["payments",Download,"Withdrawals"],["announcements",Bell,"Announcements"],["settings",Settings,"Settings"]];
+  if(tab==='users')return <div className="adminPortal usersOnly"><button className="secondary" onClick={()=>setTab('overview')}><ChevronLeft/> Admin Overview</button><AdminUserControl users={users} reload={load} master={true}/></div>;
+  const adminMenu=[["overview",Home,"Overview"],["users",UsersRound,"Users"],["cases",Database,"Applications"],["finance",Wallet,"Finance"],["targets",Target,"Targets"],["payments",Download,"Withdrawals"],["announcements",Bell,"Announcements"],["settings",Settings,"Settings"]];
   return <div className={`portal adminPortal portalWithSidebar ${adminCollapsed?"sidebarCollapsed":""}`}><aside className="portalSidebar adminSidebar"><div className="sideBrand"><button aria-label="Sidebar hide or show" onClick={()=>setAdminCollapsed(!adminCollapsed)}>{adminCollapsed?<Menu/>:<PanelLeftClose/>}</button><div><b>Admin Portal</b><small>Control Center</small></div></div><nav>{adminMenu.map(([id,Icon,label])=><button key={id} className={tab===id?'active':''} onClick={()=>setTab(id)}><Icon/><span>{label}</span></button>)}</nav><button className="sideFiles" onClick={openRecords}><Database/> Customer Files</button></aside><main className="portalContent"><header className="portalTopbar"><button className="mobileMenuButton" onClick={()=>setAdminCollapsed(!adminCollapsed)}><Menu/></button><div><b>{adminMenu.find(item=>item[0]===tab)?.[2]}</b><small>Admin Control Center</small></div><button className="noticeButton" onClick={()=>setTab("announcements")}><Bell/>{announcements.filter(a=>a.active).length>0&&<span>{announcements.filter(a=>a.active).length}</span>}</button></header><div className="portalHero adminHero compactHero"><div><small>AMJHUPI CITY AGENT BANK</small><h1>{adminMenu.find(item=>item[0]===tab)?.[2]}</h1><p>সম্পূর্ণ control, review এবং management আপনার হাতে।</p></div></div>
     {tab==='overview'&&<><div className="metricGrid"><article><Clock3/><span>Worker approval অপেক্ষায়</span><b>{dashboard.users.pending||0}</b></article><article><Database/><span>নতুন Application</span><b>{dashboard.cases.submitted||0}</b></article><article><Check/><span>Account completed</span><b>{dashboard.cases.completed||0}</b></article><article><Wallet/><span>মোট Reward</span><b>{money(dashboard.totalRewards)}</b></article></div><section className="portalPanel"><h2>আজকের কাজ</h2><p className="empty">Pending worker approve করুন, submitted customer file যাচাই করুন, তারপর account complete হলে account number দিন।</p></section></>}
     {tab==='workers'&&<section className="portalPanel"><div className="panelTitle"><div><small>WORKER MANAGEMENT</small><h2>Registration ও Approval</h2></div></div><div className="portalTable">{users.map(u=><article key={u.id}><div><b>{u.full_name}</b><small>@{u.username}</small></div><div><b>{u.phone}</b><small>{u.email||'No email'}</small></div><div><b>{u.address||'—'}</b><small>Registration address</small></div><span className={`statusTag ${u.status}`}>{statusLabel[u.status]||u.status}</span><div className="rowActions"><button onClick={()=>openWorker(u.id)}>A–Z Preview</button>{u.status!=='approved'&&<button onClick={()=>userStatus(u.id,'approved')}>Approve</button>}{u.status!=='suspended'&&<button onClick={()=>userStatus(u.id,'suspended')}>Lock</button>}<button className="danger" onClick={()=>userStatus(u.id,'rejected')}>Reject</button></div></article>)}</div></section>}
@@ -2957,14 +2994,14 @@ function App() {
           </div>
         </div>
         <div className="headerActions">
-          {auth.role === "admin" && <button className="settingsButton" onClick={() => setStep(6)}>
+          {isAdminRole(auth.role) && <button className="settingsButton" onClick={() => setStep(6)}>
             <ShieldCheck /> Admin
           </button>}
-          {auth.role === "admin" && <button className="settingsButton" onClick={() => setStep(5)}>
+          {isAdminRole(auth.role) && <button className="settingsButton" onClick={() => setStep(5)}>
             <Database /> Records
           </button>}
           {auth.role === "worker" && <button className="settingsButton" onClick={() => setStep(0)}><Database /> Dashboard</button>}
-          {auth.role === "admin" && <button
+          {isAdminRole(auth.role) && <button
             className="settingsButton"
             onClick={() => setShowSettings(true)}
           >
@@ -2987,7 +3024,7 @@ function App() {
           </button>
         </div>
       </header>
-      {auth.role === "admin" && <ApiSettings open={showSettings} onClose={() => setShowSettings(false)} />}
+      {isAdminRole(auth.role) && <ApiSettings open={showSettings} onClose={() => setShowSettings(false)} />}
       <main>
         {step === 0 ? (
           <WorkerDashboard startNew={() => setStep(1)} />
@@ -3538,7 +3575,7 @@ function App() {
               <b>{name}</b>-এর serial <b>{savedSerial}</b>। Server-এ রাখা হয়েছে
               । এখন চাইলে নিচের button থেকে download করতে পারবেন।
             </p>
-            {auth.role === "admin" && <button className="primary" onClick={downloadSaved}>
+            {isAdminRole(auth.role) && <button className="primary" onClick={downloadSaved}>
               <Download /> Customer ZIP Download করুন
             </button>}
             <button

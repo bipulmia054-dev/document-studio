@@ -2954,7 +2954,7 @@ function App() {
         setupRequired={auth.setupRequired}
         onAccess={(result) => {
           setAuth({ setupRequired: false, ...result });
-          setStep(result.role === "admin" ? 6 : 0);
+          setStep(isAdminRole(result.role) ? 6 : 0);
         }}
       />
     );

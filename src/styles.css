@@ -1599,6 +1599,25 @@ aside ul {
 .accessCard .primary {
   margin-top: 20px;
 }
+.androidDownloadLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 11px 14px;
+  border: 1px solid #e9b9bd;
+  border-radius: 10px;
+  background: #fff7f7;
+  color: #ae1219;
+  font-weight: 700;
+  text-decoration: none;
+}
+.androidDownloadLink:hover {
+  background: #fff0f1;
+  border-color: #d71920;
+}
 .accessNote {
   text-align: center;
   display: block;

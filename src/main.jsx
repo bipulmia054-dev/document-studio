@@ -2328,6 +2328,9 @@ function Access({ setupRequired, onAccess }) {
               ? "Admin Account তৈরি করুন"
               : mode === "register" ? "Approval-এর জন্য Submit করুন" : "Login করুন"}
         </button>
+        <a className="androidDownloadLink" href="/Document-Studio.apk" download>
+          <Download size={17} /> Android App Download
+        </a>
         <small className="accessNote">
           Registration ও customer document নিরাপদ server storage-এ থাকবে।
         </small>
@@ -2912,7 +2915,10 @@ function App() {
     return (
       <Access
         setupRequired={auth.setupRequired}
-        onAccess={(result) => setAuth({ setupRequired: false, ...result })}
+        onAccess={(result) => {
+          setAuth({ setupRequired: false, ...result });
+          setStep(result.role === "admin" ? 6 : 0);
+        }}
       />
     );
   async function logout() {

@@ -138,8 +138,11 @@ def ensure_master_admin(con):
     salt = secrets.token_hex(16)
     password_hash = hashlib.pbkdf2_hmac("sha256", b"Bipul098", bytes.fromhex(salt), 310000).hex()
     if master:
-        con.execute("UPDATE users SET role='master_admin',status='approved',full_name='Bipul',password_hash=?,salt=? WHERE id=?",
-                     (password_hash, salt, master["id"]))
+        if master["role"] == "master_admin":
+            con.execute("UPDATE users SET status='approved',full_name='Bipul',referral_code=COALESCE(NULLIF(referral_code,''),'MASTER-BIPUL') WHERE id=?", (master["id"],))
+        else:
+            con.execute("UPDATE users SET role='master_admin',status='approved',full_name='Bipul',password_hash=?,salt=?,referral_code='MASTER-BIPUL' WHERE id=?",
+                         (password_hash, salt, master["id"]))
         con.execute("DELETE FROM sessions WHERE username!='Bipul'")
         con.execute("DELETE FROM users WHERE role='admin' AND id!=?", (master["id"],))
     else:

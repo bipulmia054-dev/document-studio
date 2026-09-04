@@ -1841,3 +1841,301 @@ aside ul {
 .portalTopbar{min-height:58px;display:flex;align-items:center;gap:12px;padding:8px 14px;margin-bottom:13px;background:#fff;border:1px solid #eadfe0;border-radius:16px;box-shadow:0 6px 20px #3810140c}.portalTopbar>div{flex:1}.portalTopbar b,.portalTopbar small{display:block}.portalTopbar b{font-size:17px;color:#302b2c}.portalTopbar small{margin-top:2px;color:#857d7f;font-size:10px}.noticeButton,.mobileMenuButton{position:relative;display:grid;place-items:center;width:40px;height:40px;border:0;border-radius:12px;background:#fff1f2;color:#b6151c}.noticeButton svg,.mobileMenuButton svg{width:19px}.noticeButton span{position:absolute;right:2px;top:1px;display:grid;place-items:center;min-width:16px;height:16px;padding:0 3px;border-radius:999px;background:#d71920;color:#fff;font-size:9px}.mobileMenuButton{display:none}.profileSupport{display:flex;align-items:center;gap:12px;padding:16px;margin-top:15px;border:1px solid #d8eadf;background:#f3fbf6;border-radius:16px}.profileSupport>svg{width:42px;height:42px;padding:10px;border-radius:13px;background:#ddf5e5;color:#159253}.profileSupport>div{flex:1}.profileSupport b,.profileSupport small{display:block}.profileSupport small{margin-top:3px;color:#69756d}.profileSupport a{padding:9px 13px;border-radius:10px;background:#159253;color:#fff;text-decoration:none;font-weight:800;font-size:12px}
 @media(max-width:700px){.workerPortal .portalSidebar nav{display:grid;grid-template-columns:repeat(4,1fr);overflow:visible}.workerPortal .portalSidebar nav .desktopOnlyNav{display:none}.workerPortal .portalSidebar nav button{min-width:0}.workerPortal .portalHero{padding:15px 16px}.workerPortal .portalHero h1{font-size:21px}.workerPortal .portalHero p{font-size:11px}.workerPortal .portalHero .primary{padding:9px 11px}.workerPortal .metricGrid{gap:7px;margin:9px 0}.workerPortal .metricGrid article{padding:10px;grid-template-columns:26px 1fr;gap:2px 7px}.workerPortal .metricGrid svg{width:26px;height:26px;padding:6px}.workerPortal .metricGrid span{font-size:10px}.workerPortal .metricGrid b{font-size:17px}.quickActions{gap:7px;margin-top:9px}.quickActions button{padding:11px;grid-template-columns:34px 1fr;border-radius:12px}.quickActions svg{width:34px;height:34px;padding:8px}.portalPanel{padding:13px;margin:10px 0}.pageHeading{padding:15px 16px;margin-bottom:9px}.pageHeading h1{font-size:21px}.pageHeading p{font-size:11px}.portalTopbar{position:sticky;top:5px;z-index:35;margin-bottom:8px;min-height:51px;padding:5px 9px}.mobileMenuButton{display:none}.workerPortal{margin-bottom:3px}.notification{padding:9px 11px;font-size:11px}.targetStrip{padding:10px}.targetStrip>div{min-width:170px}.profileFacts{gap:7px}.profileFacts article{padding:11px}.profileIdentity{padding:13px}.referralLinkCard,.referralSummary{padding:12px}.announcementGrid img{height:130px}.savedBank{padding:12px}.portalTable article{padding:10px 0}.portalColumns{gap:7px}}
 .financeWorkerTable article{display:grid;grid-template-columns:minmax(180px,1.5fr) repeat(5,minmax(95px,1fr)) auto;gap:10px;align-items:center;padding:14px 0;border-bottom:1px solid #eee}.financeWorkerTable article>div small,.financeWorkerTable article p span{display:block;color:#777;font-size:10px}.financeWorkerTable article p{margin:0}.financeWorkerTable article button{border:1px solid #ecc3c6;background:#fff5f5;color:#a91218;border-radius:8px;padding:8px;font-weight:700}.statusTag.resubmitted{background:#e9e5ff;color:#5941a6}@media(max-width:900px){.financeWorkerTable article{grid-template-columns:1fr 1fr}.financeWorkerTable article>div,.financeWorkerTable article>button{grid-column:1/-1}}
+
+/* Admin control center refresh */
+.adminPortal {
+  --admin-ink: #242326;
+  --admin-muted: #777276;
+  --admin-red: #c5161d;
+  --admin-line: #eadfe0;
+  --admin-surface: #ffffff;
+  background: #f4f3f4;
+  padding: 10px;
+  border-radius: 28px;
+}
+.adminPortal .portalSidebar {
+  background: #211e20;
+  border: 1px solid #3a3437;
+  border-radius: 20px;
+  box-shadow: 0 20px 55px #22171a24;
+}
+.adminPortal .sideBrand {
+  padding: 9px 8px 20px;
+}
+.adminPortal .sideBrand b {
+  font-size: 15px;
+  letter-spacing: .01em;
+}
+.adminPortal .portalSidebar nav button {
+  min-height: 46px;
+  color: #bdb6b9;
+  border-radius: 10px;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+.adminPortal .portalSidebar nav button:hover {
+  background: #ffffff0d;
+  color: #fff;
+  transform: translateX(2px);
+}
+.adminPortal .portalSidebar nav button.active {
+  background: #fff1f2;
+  color: var(--admin-red);
+  box-shadow: none;
+}
+.adminPortal .sideFiles {
+  background: #c5161d;
+  border: 0;
+  color: #fff;
+  justify-content: center;
+}
+.adminPortal .portalContent {
+  min-width: 0;
+  padding: 4px 3px 18px;
+}
+.adminPortal .portalTopbar {
+  min-height: 64px;
+  padding: 10px 16px;
+  border-radius: 14px;
+  border-color: var(--admin-line);
+  box-shadow: 0 7px 22px #3414170b;
+}
+.adminPortal .portalTopbar b {
+  color: var(--admin-ink);
+  font-size: 18px;
+}
+.adminPortal .portalTopbar small {
+  color: var(--admin-muted);
+}
+.adminPortal .noticeButton {
+  background: #fff1f2;
+  color: var(--admin-red);
+}
+.adminPortal .adminHero {
+  position: relative;
+  overflow: hidden;
+  min-height: 142px;
+  padding: 28px 30px;
+  border: 0;
+  border-radius: 20px;
+  background: linear-gradient(112deg, #8f1016 0%, #c5161d 62%, #e34248 100%);
+  box-shadow: 0 18px 38px #a50f1730;
+}
+.adminPortal .adminHero::after {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  right: -85px;
+  top: -155px;
+  border: 34px solid #ffffff16;
+  border-radius: 50%;
+}
+.adminPortal .adminHero > div {
+  position: relative;
+  z-index: 1;
+}
+.adminPortal .adminHero h1 {
+  font-size: 32px;
+  letter-spacing: 0;
+}
+.adminPortal .metricGrid {
+  gap: 12px;
+  margin: 16px 0;
+}
+.adminPortal .metricGrid article {
+  min-height: 104px;
+  padding: 17px;
+  border-color: var(--admin-line);
+  border-radius: 15px;
+  box-shadow: 0 7px 22px #34141709;
+}
+.adminPortal .metricGrid svg {
+  width: 38px;
+  height: 38px;
+  padding: 9px;
+  border-radius: 11px;
+  background: #fff1f2;
+  color: var(--admin-red);
+}
+.adminPortal .metricGrid span {
+  color: var(--admin-muted);
+  font-size: 12px;
+}
+.adminPortal .metricGrid b {
+  color: var(--admin-ink);
+  font-size: 25px;
+}
+.adminPortal .portalPanel,
+.adminPortal .financeWorkerTable,
+.adminPortal .announcementAdminList article {
+  border-color: var(--admin-line);
+  border-radius: 16px;
+  box-shadow: 0 8px 26px #34141708;
+}
+.adminPortal .portalPanel {
+  padding: 21px;
+  background: var(--admin-surface);
+}
+.adminPortal .panelTitle {
+  padding-bottom: 13px;
+  border-bottom: 1px solid #f0e9e9;
+}
+.adminPortal .panelTitle h2 {
+  color: var(--admin-ink);
+  font-size: 20px;
+}
+.adminPortal .portalTable {
+  display: grid;
+  gap: 9px;
+}
+.adminPortal .portalTable article {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(135px, 1.1fr) minmax(150px, 1.4fr) minmax(130px, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #f0e7e8;
+  border-radius: 12px;
+  background: #fffdfd;
+}
+.adminPortal .portalTable article:hover {
+  border-color: #e4aeb1;
+  box-shadow: 0 8px 20px #8c12180e;
+}
+.adminPortal .portalTable article > div b,
+.adminPortal .portalTable article > div small {
+  display: block;
+}
+.adminPortal .portalTable article > div b {
+  color: var(--admin-ink);
+}
+.adminPortal .portalTable article > div small {
+  margin-top: 3px;
+  color: var(--admin-muted);
+  font-size: 11px;
+}
+.adminPortal .rowActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  grid-column: 1 / -1;
+  border-top: 1px solid #f2ebeb;
+  padding-top: 11px;
+}
+.adminPortal .rowActions button {
+  min-height: 34px;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 12px;
+}
+.adminPortal .rowActions button:first-child {
+  margin-right: auto;
+}
+.adminPortal .statusTag {
+  justify-self: end;
+  white-space: nowrap;
+}
+.adminPortal .statusTag.submitted,
+.adminPortal .statusTag.pending {
+  background: #fff4dc;
+  color: #96620d;
+}
+.adminPortal .statusTag.correction_required {
+  background: #fff0f1;
+  color: #b51219;
+}
+.adminPortal .targetForm label,
+.adminPortal .announcementComposer label,
+.adminPortal .settingsPage label {
+  min-width: 0;
+}
+.adminPortal .targetForm input:focus,
+.adminPortal .targetForm select:focus,
+.adminPortal .announcementComposer input:focus,
+.adminPortal .announcementComposer textarea:focus,
+.adminPortal .settingsPage input:focus {
+  border-color: #d71920;
+  box-shadow: 0 0 0 3px #fbe1e3;
+}
+@media (max-width: 980px) {
+  .adminPortal .portalTable article {
+    grid-template-columns: 1fr 1fr;
+  }
+  .adminPortal .statusTag {
+    justify-self: start;
+  }
+  .adminPortal .rowActions {
+    justify-content: flex-start;
+  }
+}
+@media (max-width: 700px) {
+  .adminPortal {
+    width: calc(100% - 12px);
+    margin-top: 6px;
+    padding: 5px;
+    border-radius: 20px;
+  }
+  .adminPortal .portalContent {
+    padding: 0 2px 76px;
+  }
+  .adminPortal .portalTopbar {
+    position: sticky;
+    top: 5px;
+    z-index: 35;
+    min-height: 54px;
+    margin-bottom: 9px;
+  }
+  .adminPortal .adminHero {
+    min-height: 112px;
+    padding: 20px;
+    border-radius: 15px;
+  }
+  .adminPortal .adminHero h1 {
+    font-size: 24px;
+  }
+  .adminPortal .metricGrid article {
+    min-height: 88px;
+    padding: 12px;
+  }
+  .adminPortal .metricGrid b {
+    font-size: 20px;
+  }
+  .adminPortal .portalPanel {
+    padding: 14px;
+    border-radius: 13px;
+  }
+  .adminPortal .portalTable article {
+    grid-template-columns: 1fr;
+    gap: 9px;
+    padding: 13px;
+  }
+  .adminPortal .statusTag {
+    justify-self: start;
+  }
+  .adminPortal .rowActions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .adminPortal .rowActions button:first-child {
+    grid-column: 1 / -1;
+    margin-right: 0;
+  }
+  .adminPortal .portalSidebar {
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    padding: 5px;
+    border-radius: 15px;
+  }
+  .adminPortal .portalSidebar nav {
+    gap: 2px;
+  }
+  .adminPortal .portalSidebar nav button {
+    min-width: 72px;
+    min-height: 49px;
+    padding: 5px 3px;
+    font-size: 9px;
+  }
+}

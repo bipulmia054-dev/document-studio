@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Document Studio — Customer Search",
+  "version": "1.0.2",
+  "minimum_chrome_version": "141",
+  "description": "Keep customer details alongside your work. Search your private Document Studio server.",
+  "permissions": ["sidePanel", "storage"],
+  "host_permissions": ["http://127.0.0.1/*", "http://localhost/*", "http://100.96.199.117/*", "http://192.168.110.197/*"],
+  "optional_host_permissions": ["https://*/*", "http://*/*"],
+  "action": {"default_title": "Open Document Studio"},
+  "background": {"service_worker": "background.js"},
+  "side_panel": {"default_path": "panel.html"},
+  "content_security_policy": {"extension_pages": "script-src 'self'; object-src 'none'; base-uri 'none'"}
+}

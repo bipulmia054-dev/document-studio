@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: document-studio
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && npm install && npm run build
+    startCommand: python local_server.py
+    healthCheckPath: /api/auth/status
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9

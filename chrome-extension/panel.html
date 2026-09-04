@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="bn">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Document Studio</title><link rel="stylesheet" href="panel.css"></head>
+<body>
+  <header><div><strong>Document Studio</strong><small>Customer details • পাশে খোলা থাকবে</small></div><button id="close" aria-label="Close panel">✕</button></header>
+  <main>
+    <div id="notice" role="status" aria-live="polite"></div>
+    <details id="settings"><summary>Server settings</summary><form id="server-form"><label>Server address<input id="server" type="url" required spellcheck="false"></label><button>Save & Connect</button><p>PC/server চালু রাখুন। বাইরে থেকে Tailscale প্রয়োজন।</p></form></details>
+    <section id="login" hidden><h2>Login করুন</h2><p>Document Studio-এর username/password ব্যবহার করুন।</p><form id="login-form"><label>Username<input id="username" autocomplete="username" required></label><label>Password<input id="password" type="password" autocomplete="current-password" required></label><button id="login-button">Login</button></form></section>
+    <section id="workspace" hidden>
+      <div class="session"><span id="user"></span><button id="logout" class="quiet">Logout</button></div>
+      <form id="search-form"><label for="query">Customer খুঁজুন</label><div class="search"><input id="query" type="search" placeholder="নাম, ফোন, NID অথবা email" maxlength="200" autocomplete="off"><button id="search-button">Search</button></div></form>
+      <div id="results" aria-live="polite"></div>
+      <section id="record" hidden><button id="back" class="quiet">← Search result</button><h2 id="record-title"></h2><p id="serial"></p><div id="record-content"></div><div class="actions"><button id="download">Customer ZIP Download</button><button id="open-server" class="quiet">মূল software খুলুন ↗</button></div></section>
+    </section>
+    <footer>শুধু Save করা customer দেখাবে। তথ্য অন্য webpage-এ পাঠানো হয় না।</footer>
+  </main><script type="module" src="panel.js"></script>
+</body></html>

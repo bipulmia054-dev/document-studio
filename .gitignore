@@ -1,0 +1,14 @@
+node_modules/
+.venv/
+tools/
+data/
+tmp/
+__pycache__/
+dist/
+work/
+outputs/
+android/.gradle/
+android/**/build/
+android/local.properties
+*.keystore
+*.jks

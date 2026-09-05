@@ -1890,6 +1890,69 @@ header { min-height:76px; border-bottom-color:var(--kidibo-line); background:#ff
 .statusTag,.codeBadge { border-radius:999px; } .bottomNav { border-color:var(--kidibo-line); }
 @media (max-width:700px) { .accessPage { padding:14px; place-items:start center; } .accessCard { margin-top:5vh; padding:28px 20px; border-radius:22px; } .accessCard h1 { font-size:31px; } .portalWithSidebar { width:calc(100% - 14px); } }
 
+/* UXPilot reference alignment: City Agent Banking workspace */
+body { background:#f7f8fa; }
+header { padding-inline:clamp(18px,4vw,64px); }
+.portalWithSidebar { width:min(1440px,calc(100% - 32px)); margin-top:24px; grid-template-columns:238px minmax(0,1fr); gap:24px; }
+.portalSidebar { background:#fff; color:#3b3537; border:1px solid #eee2e3; box-shadow:0 16px 38px #3c10130e; }
+.sideBrand { border-bottom-color:#f0e4e5; }
+.sideBrand b { color:#3b3537; }
+.sideBrand small { color:#9a8587; }
+.portalSidebar nav button { color:#887679; }
+.portalSidebar nav button:hover { background:#fff4f4; color:#b51219; }
+.portalSidebar nav button.active { color:#b51219; background:#fff0f1; box-shadow:none; }
+.sideFiles { color:#b51219; background:#fff4f4; border-color:#f0d7d8; }
+.portalTopbar { border:0; background:transparent; box-shadow:none; padding-inline:4px; }
+.portalTopbar b { font-size:20px; color:#2b2527; }
+.portalTopbar small { color:#927f81; }
+.workerPortal .portalHero,.adminPortal .adminHero { background:linear-gradient(115deg,#fff4f4,#fff); border:1px solid #f0d9da; box-shadow:0 12px 30px #5b11150c; color:#352d2f; }
+.workerPortal .portalHero h1,.adminPortal .adminHero h1 { color:#4b292c; }
+.workerPortal .portalHero p,.adminPortal .adminHero p { color:#866f72; }
+.workerPortal .portalHero small,.adminPortal .adminHero small { color:#c5161d; }
+.workerPortal .portalHero .primary { background:#d71920 !important; color:#fff !important; }
+.metricGrid { gap:16px; margin:20px 0; }
+.metricGrid article { border:1px solid #eee2e3; border-radius:16px; background:#fff; box-shadow:0 8px 22px #4c15180a; }
+.metricGrid svg { background:#fff0f1; color:#c5161d; }
+.metricGrid span { color:#927e80; }
+.metricGrid b { color:#3d292b; }
+.quickActions { gap:16px; }
+.quickActions button { border:1px solid #eee2e3; box-shadow:0 8px 22px #4c15180a; }
+.quickActions button:hover { border-color:#e7aeb1; transform:translateY(-2px); }
+.quickActions svg { background:#fff0f1; color:#c5161d; }
+.targetStrip { border-color:#eee2e3; background:#fff; }
+.pageHeading { background:linear-gradient(115deg,#fff4f4,#fff); border:1px solid #f0d9da; }
+.pageHeading h1 { color:#4b292c; }
+.portalPanel { border-color:#eee2e3; box-shadow:0 8px 22px #4c15180a; }
+.portalTable article { border-bottom-color:#f1e6e7; }
+.portalTable article:hover { background:#fff8f8; }
+.statusTag { border:1px solid transparent; }
+.statusTag.pending,.statusTag.submitted { background:#fff4d9; color:#9b6b00; }
+.statusTag.approved,.statusTag.completed { background:#e5f6ec; color:#167545; }
+.statusTag.rejected,.statusTag.suspended { background:#fff0f1; color:#b51219; }
+.adminPortal { background:#f7f8fa; }
+.adminPortal .portalSidebar { background:#fff; }
+.adminPortal .portalSidebar nav button.active { background:#fff0f1; color:#c5161d; }
+.adminPortal .portalTopbar { background:transparent; }
+.adminPortal .adminHero { padding:26px 30px; }
+.adminPortal .metricGrid article { min-height:112px; }
+.adminPortal .portalPanel h2 { color:#3b2d2f; }
+.announcementGrid article,.announcementAdminList article,.targetPage article,.supportCard { border-color:#eee2e3; box-shadow:0 8px 22px #4c15180a; }
+.financeWorkerTable article { border-bottom-color:#f1e6e7; }
+@media(max-width:700px) {
+  .portalWithSidebar { width:calc(100% - 20px); margin-top:10px; }
+  .portalContent { padding-bottom:22px; }
+  .portalTopbar { padding-inline:0; }
+  .portalTopbar b { font-size:16px; }
+  .workerPortal .portalHero,.adminPortal .adminHero { padding:18px; border-radius:16px; }
+  .workerPortal .portalHero h1,.adminPortal .adminHero h1 { font-size:24px; }
+  .metricGrid { gap:9px; margin:12px 0; }
+  .metricGrid article { min-height:84px; padding:12px; }
+  .metricGrid span { font-size:10px; }
+  .metricGrid b { font-size:18px; }
+  .quickActions button { min-height:70px; }
+  .portalPanel { border-radius:14px; }
+}
+
 /* City Agent Banking dashboard refresh */
 :root { --city-red:#d71920; --city-dark:#751116; --city-soft:#fff1f2; --city-line:#ead9da; --city-ink:#242326; }
 body { background:linear-gradient(135deg,#fff,#f8f8f9 55%,#fff4f4); color:var(--city-ink); }

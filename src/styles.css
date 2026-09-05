@@ -1953,36 +1953,119 @@ header { padding-inline:clamp(18px,4vw,64px); }
   .portalPanel { border-radius:14px; }
 }
 
-/* Uploaded dashboard reference: compact cards, tables and mobile stacking */
-.workerPortal, .adminPortal { background:#fff1f2; }
-.workerPortal .portalContent, .adminPortal .portalContent { background:#fff1f2; border-radius:0; }
-.workerPortal .portalHero, .adminPortal .adminHero { min-height:104px; display:flex; align-items:center; padding:24px 28px; border:0; border-radius:12px; background:linear-gradient(105deg,#d71920,#e51d25); color:#fff; }
-.workerPortal .portalHero h1, .adminPortal .adminHero h1, .workerPortal .portalHero p, .adminPortal .adminHero p, .workerPortal .portalHero small, .adminPortal .adminHero small { color:#fff; }
-.workerPortal .portalHero .primary { background:#fff !important; color:#c5161d !important; }
-.metricGrid article { min-height:82px; padding:16px; border-radius:10px; }
-.metricGrid article span { font-size:10px; font-weight:800; letter-spacing:.04em; }
-.metricGrid article b { font-size:21px; }
-.portalPanel { border-radius:10px; }
-.portalPanel .panelTitle h2 { font-size:16px; }
-.portalTable article { grid-template-columns:1.2fr 1.5fr 1fr .8fr; gap:12px; padding:13px 14px; }
-.quickActions { grid-template-columns:repeat(3,1fr); }
-.quickActions button { border-radius:10px; }
-.targetStrip { border-radius:10px; }
-.statusTag { font-size:9px; letter-spacing:.02em; }
-.textAction { border:0; background:none; color:#d71920; font-size:11px; font-weight:800; }
-@media(max-width:700px) {
-  .workerPortal, .adminPortal, .workerPortal .portalContent, .adminPortal .portalContent { background:#fff1f2; }
-  .workerPortal .portalHero, .adminPortal .adminHero { min-height:112px; padding:18px 16px; }
-  .workerPortal .portalHero h1, .adminPortal .adminHero h1 { font-size:22px; }
-  .workerPortal .portalHero p, .adminPortal .adminHero p { font-size:11px; max-width:210px; }
-  .workerPortal .portalHero .primary { padding:10px 12px; font-size:11px; }
-  .metricGrid { grid-template-columns:1fr 1fr; }
-  .metricGrid article { min-height:74px; padding:11px; }
-  .metricGrid article b { font-size:17px; }
-  .quickActions { grid-template-columns:1fr 1fr; }
-  .quickActions button:last-child { grid-column:1/-1; }
-  .portalTable article { grid-template-columns:1fr; gap:5px; }
-  .portalTable article .statusTag { justify-self:start; }
+/* Final reference-led dashboard system */
+:root {
+  --ref-red: #e21b23;
+  --ref-red-dark: #bd1118;
+  --ref-pink: #fff1f2;
+  --ref-line: #eadedf;
+  --ref-ink: #292529;
+  --ref-muted: #817579;
+  --ref-green: #1c9b62;
+  --ref-yellow: #c88912;
+}
+body { background: #fff; color: var(--ref-ink); }
+header { background: #fff; border-bottom: 1px solid #f1e9e9; }
+.cityLogo { background: #fff; }
+.primary { background: var(--ref-red) !important; box-shadow: 0 6px 14px #e21b2330 !important; }
+.primary:hover { background: var(--ref-red-dark) !important; }
+.portalWithSidebar { width: min(1280px, calc(100% - 32px)); grid-template-columns: 172px minmax(0, 1fr); gap: 0; margin: 0 auto; background: var(--ref-pink); min-height: calc(100vh - 76px); }
+.portalSidebar { position: sticky; top: 0; min-height: calc(100vh - 76px); border: 0; border-right: 1px solid var(--ref-line); border-radius: 0; background: #fff; box-shadow: none; color: var(--ref-ink); padding: 14px 10px; }
+.sideBrand { gap: 7px; padding: 0 5px 16px; border-bottom: 1px solid #f0e8e8; }
+.sideBrand img { width: 46px; height: 34px; }
+.sideBrand b { font-size: 10px; text-transform: uppercase; color: var(--ref-red); letter-spacing: .03em; }
+.sideBrand small { font-size: 6px; color: var(--ref-muted); }
+.sideBrand > button:first-child { width: 42px; height: 34px; border: 0; background-size: contain; }
+.portalSidebar nav { gap: 3px; margin-top: 13px; }
+.portalSidebar nav button, .sideFiles { min-height: 35px; padding: 8px 9px; border-radius: 6px; color: #8b7b7e; font-size: 10px; }
+.portalSidebar nav button svg, .sideFiles svg { width: 13px; height: 13px; }
+.portalSidebar nav button.active { background: var(--ref-red); color: #fff; box-shadow: none; }
+.portalSidebar nav button:hover { background: var(--ref-pink); color: var(--ref-red); }
+.sideFiles { border: 0; background: transparent; margin-top: auto; }
+.portalContent { min-width: 0; background: var(--ref-pink); }
+.portalTopbar { min-height: 49px; margin: 0; padding: 7px 18px; border: 0; border-bottom: 1px solid #f1dddd; border-radius: 0; background: #fff; box-shadow: none; }
+.portalTopbar b { font-size: 14px; }
+.portalTopbar small { font-size: 8px; }
+.noticeButton, .mobileMenuButton { width: 29px; height: 29px; border-radius: 7px; background: #fff; color: var(--ref-red); }
+.portalContent > .portalHero, .portalContent > .pageHeading, .portalContent > .compactHero { margin: 16px; }
+.workerPortal .portalHero, .adminPortal .adminHero { min-height: 78px; padding: 19px 22px; border: 0; border-radius: 9px; background: var(--ref-red); color: #fff; box-shadow: none; }
+.workerPortal .portalHero h1, .adminPortal .adminHero h1 { margin: 0 0 4px; color: #fff; font-size: 21px; }
+.workerPortal .portalHero p, .adminPortal .adminHero p { color: #fff; font-size: 10px; }
+.workerPortal .portalHero small, .adminPortal .adminHero small { color: #fff; font-size: 8px; }
+.workerPortal .portalHero .primary { background: #fff !important; color: var(--ref-red) !important; box-shadow: none !important; font-size: 10px; padding: 8px 12px; }
+.metricGrid { gap: 9px; margin: 0 16px 16px; }
+.metricGrid article { min-height: 75px; padding: 12px; border: 1px solid var(--ref-line); border-radius: 9px; background: #fff; box-shadow: none; grid-template-columns: 25px 1fr; gap: 2px 8px; }
+.metricGrid svg { width: 25px; height: 25px; padding: 6px; border-radius: 6px; background: #fff0f1; color: var(--ref-red); }
+.metricGrid span { font-size: 8px; color: var(--ref-muted); }
+.metricGrid b { font-size: 17px; color: var(--ref-ink); }
+.portalPanel, .quickActions button, .targetStrip { border: 1px solid var(--ref-line); border-radius: 9px; background: #fff; box-shadow: none; }
+.quickActions { gap: 9px; margin: 0 16px 16px; }
+.quickActions button { padding: 13px; grid-template-columns: 29px 1fr; }
+.quickActions svg { width: 29px; height: 29px; padding: 7px; border-radius: 7px; background: #fff0f1; color: var(--ref-red); }
+.pageHeading { min-height: 74px; padding: 17px 20px; border: 1px solid var(--ref-line); border-radius: 9px; background: #fff; box-shadow: none; }
+.pageHeading h1 { font-size: 24px; color: var(--ref-ink); }
+.pageHeading p { color: var(--ref-muted); font-size: 11px; }
+.portalTable article { padding: 12px 13px; border-bottom: 1px solid #f2e8e9; }
+.portalTable article:hover { background: #fffafa; }
+.statusTag { font-size: 8px; padding: 4px 7px; border-radius: 4px; }
+.statusTag.pending, .statusTag.submitted { background: #fff4d9; color: var(--ref-yellow); }
+.statusTag.approved, .statusTag.completed { background: #e5f6ec; color: var(--ref-green); }
+.statusTag.rejected, .statusTag.suspended { background: #fff0f1; color: var(--ref-red); }
+.targetStrip { margin: 0 16px 16px; padding: 14px; }
+.referralSummary { border-radius: 9px; background: #292529; }
+.savedBank { border-radius: 9px; }
+.adminPortal { border-radius: 0; padding: 0; background: var(--ref-pink); }
+.adminPortal .portalSidebar { background: #fff; }
+.adminPortal .portalContent > .compactHero { padding: 19px 22px; }
+.adminPortal .metricGrid article { min-height: 75px; }
+.adminPortal .portalPanel { margin: 0 16px 16px; }
+.adminPortal .panelTitle h2 { font-size: 16px; }
+.announcementGrid, .targetPage { margin: 0 16px; }
+.announcementGrid article, .targetPage article, .supportCard { border-color: var(--ref-line); border-radius: 9px; box-shadow: none; }
+.financeWorkerTable { padding: 0 15px; }
+.financeWorkerTable article { border-bottom-color: #f1e6e7; }
+.empty { color: var(--ref-muted); }
+.formError { border-color: #f3cacc; background: #fff0f1; color: var(--ref-red-dark); }
+@media (max-width: 900px) {
+  .portalWithSidebar { width: 100%; }
+  .portalSidebar { grid-column: 1; }
+  .portalContent > .portalHero, .portalContent > .pageHeading, .portalContent > .compactHero { margin: 12px; }
+  .metricGrid { margin-inline: 12px; }
+  .quickActions, .targetStrip { margin-inline: 12px; }
+}
+@media (max-width: 700px) {
+  .portalWithSidebar { display: block; min-height: 100vh; }
+  .portalSidebar { width: min(260px, 84vw); min-height: 100vh; padding: 15px 12px; border-radius: 0 14px 14px 0; transform: translateX(0); }
+  .portalWithSidebar.sidebarCollapsed .portalSidebar { transform: translateX(-110%); }
+  .portalSidebar .sideBrand { display: flex; }
+  .portalSidebar .sideBrand > div { display: block; }
+  .portalSidebar nav { display: grid; overflow: visible; }
+  .portalSidebar nav button { min-height: 40px; flex-direction: row; justify-content: flex-start; font-size: 12px; }
+  .portalSidebar nav span { display: block; }
+  .portalSidebar .sideFiles { display: flex; font-size: 12px; }
+  .portalTopbar { position: sticky; top: 0; z-index: 35; }
+  .mobileMenuButton { display: grid; background: #fff url('/city-bank-logo.png') center/20px auto no-repeat; border: 1px solid #efd3d5; }
+  .mobileMenuButton svg { display: none; }
+  .portalContent { padding-bottom: 12px; }
+  .workerPortal .portalHero, .adminPortal .adminHero { min-height: 92px; padding: 16px; margin: 10px 12px; }
+  .workerPortal .portalHero h1, .adminPortal .adminHero h1 { font-size: 20px; }
+  .workerPortal .portalHero .primary { padding: 8px 10px; }
+  .metricGrid { grid-template-columns: 1fr 1fr; gap: 7px; margin: 0 12px 12px; }
+  .metricGrid article { min-height: 72px; padding: 10px; }
+  .metricGrid b { font-size: 16px; }
+  .metricGrid span { font-size: 8px; }
+  .quickActions { grid-template-columns: repeat(3, 1fr); margin: 0 12px 12px; gap: 6px; }
+  .quickActions button { display: flex; min-height: 63px; padding: 8px 4px; flex-direction: column; align-items: center; text-align: center; gap: 3px; }
+  .quickActions button span { font-size: 7px; }
+  .quickActions button b { font-size: 9px; }
+  .portalPanel { margin: 0 12px 12px; }
+  .portalTable article, .applications article { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .portalTable article > .statusTag, .portalTable article > .rowActions, .applications article > .rowActions { grid-column: 1 / -1; justify-self: start; }
+  .portalTable article > .rowActions { display: flex; flex-wrap: wrap; }
+  .pageHeading { margin: 10px 12px; padding: 15px; }
+  .pageHeading h1 { font-size: 21px; }
+  .announcementGrid, .targetPage { margin: 0 12px; }
+  .financeWorkerTable { padding: 0 12px; }
 }
 
 /* City Agent Banking dashboard refresh */

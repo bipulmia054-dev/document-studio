@@ -44,13 +44,24 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #dce3dc;
-  background: #fafaf7df;
-  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #eee;
+  background: #fff;
   position: sticky;
   top: 0;
   z-index: 5;
 }
+
+@media (max-width: 768px) {
+  header {
+    height: 64px;
+  }
+}
+@media (max-width: 480px) {
+  header {
+    height: 56px;
+  }
+}
+
 .brand {
   display: flex;
   gap: 11px;
@@ -171,7 +182,7 @@ textarea:focus {
 .primary {
   border: 0;
   border-radius: 12px;
-  background: #173f38;
+  background: #df101c;
   color: #fff;
   font-weight: 700;
   padding: 14px 20px;
@@ -180,8 +191,16 @@ textarea:focus {
   justify-content: center;
   gap: 8px;
   margin-top: 18px;
-  box-shadow: 0 7px 20px #173f3830;
+  box-shadow: 0 3px 10px rgba(0,0,0,.02);
 }
+
+@media (max-width: 480px) {
+  .primary {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+}
+
 .primary:disabled {
   opacity: 0.45;
 }
@@ -299,9 +318,18 @@ aside,
   width: 34px;
   height: 34px;
 }
+
+@media (max-width: 480px) {
+  .icon {
+    width: 44px;
+    height: 44px;
+  }
+}
+
 .icon svg {
   width: 16px;
 }
+
 h4 {
   display: flex;
   align-items: center;
@@ -314,6 +342,13 @@ h4 {
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .fields {
   margin-bottom: 10px;
 }
@@ -2041,6 +2076,17 @@ header { background: #fff; border-bottom: 1px solid #f1e9e9; }
 .metricGrid svg { width: 25px; height: 25px; padding: 6px; border-radius: 6px; background: #fff0f1; color: var(--ref-red); }
 .metricGrid span { font-size: 8px; color: var(--ref-muted); }
 .metricGrid b { font-size: 17px; color: var(--ref-ink); }
+
+@media (max-width: 480px) {
+  .metricGrid {
+    grid-template-columns: 1fr;
+  }
+  .metricGrid article {
+    height: auto;
+    min-height: 0;
+  }
+}
+
 .portalPanel, .quickActions button, .targetStrip { border: 1px solid var(--ref-line); border-radius: 9px; background: #fff; box-shadow: none; }
 .quickActions { gap: 9px; margin: 0 16px 16px; }
 .quickActions button { padding: 13px; grid-template-columns: 29px 1fr; }
@@ -2050,10 +2096,19 @@ header { background: #fff; border-bottom: 1px solid #f1e9e9; }
 .pageHeading p { color: var(--ref-muted); font-size: 11px; }
 .portalTable article { padding: 12px 13px; border-bottom: 1px solid #f2e8e9; }
 .portalTable article:hover { background: #fffafa; }
-.statusTag { font-size: 8px; padding: 4px 7px; border-radius: 4px; }
+.statusTag { font-size: 8px; padding: 4px 7px; border-radius: 4px; min-height: 28px; display: inline-flex; align-items: center; }
 .statusTag.pending, .statusTag.submitted { background: #fff4d9; color: var(--ref-yellow); }
 .statusTag.approved, .statusTag.completed { background: #e5f6ec; color: var(--ref-green); }
 .statusTag.rejected, .statusTag.suspended { background: #fff0f1; color: var(--ref-red); }
+
+@media (max-width: 480px) {
+  .statusTag {
+    font-size: 11px;
+    padding: 6px 10px;
+    min-height: 32px;
+  }
+}
+
 .targetStrip { margin: 0 16px 16px; padding: 14px; }
 .referralSummary { border-radius: 9px; background: #292529; }
 .savedBank { border-radius: 9px; }
@@ -2548,6 +2603,12 @@ body { background:linear-gradient(135deg,#fff,#f8f8f9 55%,#fff4f4); color:var(--
   gap: 0;
   background: var(--ref-pink, #fff5f5);
   min-height: calc(100vh - 76px);
+}
+
+@media (min-width: 1280px) {
+  .portalWithSidebar {
+    grid-template-columns: minmax(200px, 280px) minmax(0, 1fr);
+  }
 }
 .portalSidebar,
 .adminPortal .portalSidebar {

@@ -1953,6 +1953,38 @@ header { padding-inline:clamp(18px,4vw,64px); }
   .portalPanel { border-radius:14px; }
 }
 
+/* Uploaded dashboard reference: compact cards, tables and mobile stacking */
+.workerPortal, .adminPortal { background:#fff1f2; }
+.workerPortal .portalContent, .adminPortal .portalContent { background:#fff1f2; border-radius:0; }
+.workerPortal .portalHero, .adminPortal .adminHero { min-height:104px; display:flex; align-items:center; padding:24px 28px; border:0; border-radius:12px; background:linear-gradient(105deg,#d71920,#e51d25); color:#fff; }
+.workerPortal .portalHero h1, .adminPortal .adminHero h1, .workerPortal .portalHero p, .adminPortal .adminHero p, .workerPortal .portalHero small, .adminPortal .adminHero small { color:#fff; }
+.workerPortal .portalHero .primary { background:#fff !important; color:#c5161d !important; }
+.metricGrid article { min-height:82px; padding:16px; border-radius:10px; }
+.metricGrid article span { font-size:10px; font-weight:800; letter-spacing:.04em; }
+.metricGrid article b { font-size:21px; }
+.portalPanel { border-radius:10px; }
+.portalPanel .panelTitle h2 { font-size:16px; }
+.portalTable article { grid-template-columns:1.2fr 1.5fr 1fr .8fr; gap:12px; padding:13px 14px; }
+.quickActions { grid-template-columns:repeat(3,1fr); }
+.quickActions button { border-radius:10px; }
+.targetStrip { border-radius:10px; }
+.statusTag { font-size:9px; letter-spacing:.02em; }
+.textAction { border:0; background:none; color:#d71920; font-size:11px; font-weight:800; }
+@media(max-width:700px) {
+  .workerPortal, .adminPortal, .workerPortal .portalContent, .adminPortal .portalContent { background:#fff1f2; }
+  .workerPortal .portalHero, .adminPortal .adminHero { min-height:112px; padding:18px 16px; }
+  .workerPortal .portalHero h1, .adminPortal .adminHero h1 { font-size:22px; }
+  .workerPortal .portalHero p, .adminPortal .adminHero p { font-size:11px; max-width:210px; }
+  .workerPortal .portalHero .primary { padding:10px 12px; font-size:11px; }
+  .metricGrid { grid-template-columns:1fr 1fr; }
+  .metricGrid article { min-height:74px; padding:11px; }
+  .metricGrid article b { font-size:17px; }
+  .quickActions { grid-template-columns:1fr 1fr; }
+  .quickActions button:last-child { grid-column:1/-1; }
+  .portalTable article { grid-template-columns:1fr; gap:5px; }
+  .portalTable article .statusTag { justify-self:start; }
+}
+
 /* City Agent Banking dashboard refresh */
 :root { --city-red:#d71920; --city-dark:#751116; --city-soft:#fff1f2; --city-line:#ead9da; --city-ink:#242326; }
 body { background:linear-gradient(135deg,#fff,#f8f8f9 55%,#fff4f4); color:var(--city-ink); }

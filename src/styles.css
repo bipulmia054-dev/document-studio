@@ -1872,7 +1872,36 @@ aside ul {
 
 .sideBrand>button{display:grid;place-items:center;flex:none;width:42px;height:42px;border:1px solid #ffffff1f;border-radius:12px;background:#ffffff0d;color:#fff}.sideBrand>button svg{width:20px;height:20px}.sidebarCollapsed{grid-template-columns:82px minmax(0,1fr)}.sidebarCollapsed .sideBrand{justify-content:center}.sidebarCollapsed .sideBrand>div,.sidebarCollapsed .portalSidebar nav span,.sidebarCollapsed .sideFiles{display:none}.sidebarCollapsed .portalSidebar nav button{justify-content:center;padding-inline:8px}
 .portalTopbar{min-height:58px;display:flex;align-items:center;gap:12px;padding:8px 14px;margin-bottom:13px;background:#fff;border:1px solid #eadfe0;border-radius:16px;box-shadow:0 6px 20px #3810140c}.portalTopbar>div{flex:1}.portalTopbar b,.portalTopbar small{display:block}.portalTopbar b{font-size:17px;color:#302b2c}.portalTopbar small{margin-top:2px;color:#857d7f;font-size:10px}.noticeButton,.mobileMenuButton{position:relative;display:grid;place-items:center;width:40px;height:40px;border:0;border-radius:12px;background:#fff1f2;color:#b6151c}.noticeButton svg,.mobileMenuButton svg{width:19px}.noticeButton span{position:absolute;right:2px;top:1px;display:grid;place-items:center;min-width:16px;height:16px;padding:0 3px;border-radius:999px;background:#d71920;color:#fff;font-size:9px}.mobileMenuButton{display:none}.profileSupport{display:flex;align-items:center;gap:12px;padding:16px;margin-top:15px;border:1px solid #d8eadf;background:#f3fbf6;border-radius:16px}.profileSupport>svg{width:42px;height:42px;padding:10px;border-radius:13px;background:#ddf5e5;color:#159253}.profileSupport>div{flex:1}.profileSupport b,.profileSupport small{display:block}.profileSupport small{margin-top:3px;color:#69756d}.profileSupport a{padding:9px 13px;border-radius:10px;background:#159253;color:#fff;text-decoration:none;font-weight:800;font-size:12px}
-@media(max-width:700px){.workerPortal .portalSidebar nav{display:grid;grid-template-columns:repeat(4,1fr);overflow:visible}.workerPortal .portalSidebar nav .desktopOnlyNav{display:none}.workerPortal .portalSidebar nav button{min-width:0}.workerPortal .portalHero{padding:15px 16px}.workerPortal .portalHero h1{font-size:21px}.workerPortal .portalHero p{font-size:11px}.workerPortal .portalHero .primary{padding:9px 11px}.workerPortal .metricGrid{gap:7px;margin:9px 0}.workerPortal .metricGrid article{padding:10px;grid-template-columns:26px 1fr;gap:2px 7px}.workerPortal .metricGrid svg{width:26px;height:26px;padding:6px}.workerPortal .metricGrid span{font-size:10px}.workerPortal .metricGrid b{font-size:17px}.quickActions{gap:7px;margin-top:9px}.quickActions button{padding:11px;grid-template-columns:34px 1fr;border-radius:12px}.quickActions svg{width:34px;height:34px;padding:8px}.portalPanel{padding:13px;margin:10px 0}.pageHeading{padding:15px 16px;margin-bottom:9px}.pageHeading h1{font-size:21px}.pageHeading p{font-size:11px}.portalTopbar{position:sticky;top:5px;z-index:35;margin-bottom:8px;min-height:51px;padding:5px 9px}.mobileMenuButton{display:none}.workerPortal{margin-bottom:3px}.notification{padding:9px 11px;font-size:11px}.targetStrip{padding:10px}.targetStrip>div{min-width:170px}.profileFacts{gap:7px}.profileFacts article{padding:11px}.profileIdentity{padding:13px}.referralLinkCard,.referralSummary{padding:12px}.announcementGrid img{height:130px}.savedBank{padding:12px}.portalTable article{padding:10px 0}.portalColumns{gap:7px}}
+@media(max-width:700px){
+  .workerPortal .portalSidebar nav,
+  .adminPortal .portalSidebar nav {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    overflow: visible;
+  }
+  .workerPortal .portalSidebar nav button,
+  .adminPortal .portalSidebar nav button {
+    min-width: 0;
+    min-height: 44px;
+    height: 44px;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 11px;
+    padding: 0 13px;
+    font-size: 13px;
+    border-radius: 9px;
+  }
+  .workerPortal .portalSidebar nav span,
+  .adminPortal .portalSidebar nav span {
+    display: block;
+  }
+  .workerPortal .portalSidebar nav .desktopOnlyNav,
+  .adminPortal .portalSidebar nav .desktopOnlyNav {
+    display: none;
+  }
+  .workerPortal .portalHero{padding:15px 16px}.workerPortal .portalHero h1{font-size:21px}.workerPortal .portalHero p{font-size:11px}.workerPortal .portalHero .primary{padding:9px 11px}.workerPortal .metricGrid{gap:7px;margin:9px 0}.workerPortal .metricGrid article{padding:10px;grid-template-columns:26px 1fr;gap:2px 7px}.workerPortal .metricGrid svg{width:26px;height:26px;padding:6px}.workerPortal .metricGrid span{font-size:10px}.workerPortal .metricGrid b{font-size:17px}.quickActions{gap:7px;margin-top:9px}.quickActions button{padding:11px;grid-template-columns:34px 1fr;border-radius:12px}.quickActions svg{width:34px;height:34px;padding:8px}.portalPanel{padding:13px;margin:10px 0}.pageHeading{padding:15px 16px;margin-bottom:9px}.pageHeading h1{font-size:21px}.pageHeading p{font-size:11px}.portalTopbar{position:sticky;top:5px;z-index:35;margin-bottom:8px;min-height:51px;padding:5px 9px}.mobileMenuButton{display:none}.workerPortal{margin-bottom:3px}.notification{padding:9px 11px;font-size:11px}.targetStrip{padding:10px}.targetStrip>div{min-width:170px}.profileFacts{gap:7px}.profileFacts article{padding:11px}.profileIdentity{padding:13px}.referralLinkCard,.referralSummary{padding:12px}.announcementGrid img{height:130px}.savedBank{padding:12px}.portalTable article{padding:10px 0}.portalColumns{gap:7px}
+}
 
 /* KIDIBO visual system */
 :root { --kidibo-ink:#102a43; --kidibo-blue:#1f5f8b; --kidibo-teal:#168f89; --kidibo-coral:#f07b63; --kidibo-paper:#f7fafc; --kidibo-line:#d9e4ec; --kidibo-muted:#637789; font-family:"Hind Siliguri",sans-serif; color:var(--kidibo-ink); background:var(--kidibo-paper); }

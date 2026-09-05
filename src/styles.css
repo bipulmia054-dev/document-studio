@@ -1,16 +1,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap");
+
 :root {
+  --red: #df101c;
+  --red2: #ef1b27;
+  --pink: #fff5f5;
+  --line: #eadede;
+  --text: #252525;
+  --muted: #858585;
+  --green: #18a957;
+  --orange: #ff8517;
+  --shadow: 0 2px 10px rgba(40,0,0,.045);
   font-family: "Hind Siliguri", sans-serif;
-  color: #193a34;
-  background: #f5f4ef;
+  color: #252525;
+  background: #fff;
 }
+
 * {
   box-sizing: border-box;
 }
-body {
+
+html, body {
   margin: 0;
-  background:
-    radial-gradient(circle at 8% 4%, #e1eee7, transparent 30%), #f5f4ef;
+  min-height: 100%;
+  font-family: "Hind Siliguri", sans-serif;
+  color: #252525;
+  background: #fff;
 }
 button,
 input,
@@ -2403,4 +2417,158 @@ body { background:linear-gradient(135deg,#fff,#f8f8f9 55%,#fff4f4); color:var(--
     padding: 5px 3px;
     font-size: 9px;
   }
+}
+
+/* Final exact reference alignment */
+.portalWithSidebar {
+  width: min(1280px, 100%);
+  grid-template-columns: 240px minmax(0, 1fr);
+  margin: 0 auto;
+  gap: 0;
+  background: var(--ref-pink, #fff5f5);
+  min-height: calc(100vh - 76px);
+}
+.portalSidebar,
+.adminPortal .portalSidebar {
+  position: sticky;
+  top: 0;
+  min-height: calc(100vh - 76px);
+  width: auto;
+  background: #fff;
+  border: 0;
+  border-right: 1px solid #eee;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0 10px 16px;
+}
+.sideBrand {
+  height: 84px;
+  padding: 0 14px;
+  border-bottom: 1px solid #eee;
+}
+.sideBrand b { color: #df101c; font-size: 12px; }
+.sideBrand small { color: #555; font-size: 8px; }
+.portalSidebar nav { margin-top: 18px; padding: 0; }
+.portalSidebar nav button,
+.sideFiles {
+  height: 37px;
+  min-height: 37px;
+  border-radius: 7px;
+  padding: 0 13px;
+  color: #888;
+  font-size: 12px;
+}
+.portalSidebar nav button.active,
+.adminPortal .portalSidebar nav button.active {
+  background: #df101c;
+  color: #fff;
+  box-shadow: none;
+}
+.portalSidebar nav button:hover { background: #df101c; color: #fff; }
+.sideFiles { margin-top: auto; background: transparent; color: #888; }
+.portalContent,
+.adminPortal .portalContent { background: #fff5f5; padding: 0; }
+.portalTopbar,
+.adminPortal .portalTopbar {
+  height: 84px;
+  min-height: 84px;
+  margin: 0;
+  padding: 0 27px;
+  border: 0;
+  border-bottom: 1px solid #eee;
+  border-radius: 0;
+  background: #fff;
+  box-shadow: none;
+}
+.portalTopbar b,
+.adminPortal .portalTopbar b { font-size: 18px; color: #252525; }
+.portalTopbar small,
+.adminPortal .portalTopbar small { color: #888; font-size: 7px; }
+.portalContent > .portalHero,
+.portalContent > .pageHeading,
+.portalContent > .compactHero,
+.adminPortal .portalContent > .compactHero { margin: 27px; }
+.workerPortal .portalHero,
+.adminPortal .adminHero {
+  min-height: 130px;
+  padding: 31px 27px;
+  border: 0;
+  border-radius: 14px;
+  background: #df101c;
+  box-shadow: none;
+}
+.workerPortal .portalHero h1,
+.adminPortal .adminHero h1 { color: #fff; font-size: 25px; }
+.workerPortal .portalHero p,
+.adminPortal .adminHero p,
+.workerPortal .portalHero small,
+.adminPortal .adminHero small { color: #fff; }
+.metricGrid { gap: 18px; margin: 25px 27px 0; }
+.metricGrid article,
+.adminPortal .metricGrid article {
+  min-height: 132px;
+  height: 132px;
+  padding: 13px;
+  border: 1px solid #eadede;
+  border-radius: 13px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(40,0,0,.045);
+}
+.portalPanel,
+.adminPortal .portalPanel,
+.quickActions button,
+.targetStrip {
+  border: 1px solid #eadede;
+  border-radius: 13px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(40,0,0,.045);
+}
+.adminPortal .portalPanel { margin: 14px 27px 0; padding: 21px; }
+.adminPortal .adminHero { min-height: 130px; padding: 31px 27px; border-radius: 14px; }
+@media (max-width: 700px) {
+  .portalWithSidebar { display: block; width: 100%; min-height: 100vh; }
+  .portalSidebar,
+  .adminPortal .portalSidebar {
+    position: fixed;
+    left: 0;
+    right: auto;
+    top: 0;
+    bottom: 0;
+    width: min(240px, 84vw);
+    min-height: 100vh;
+    padding: 0 10px 18px;
+    border-radius: 0 14px 14px 0;
+    transform: translateX(0);
+    transition: transform .24s ease;
+    z-index: 90;
+  }
+  .portalWithSidebar.sidebarCollapsed .portalSidebar { transform: translateX(-110%); }
+  .portalSidebar .sideBrand { display: flex; height: 70px; padding: 0 10px; }
+  .portalSidebar .sideBrand > div { display: block; }
+  .portalSidebar nav { display: grid; overflow: visible; margin-top: 13px; }
+  .portalSidebar nav button,
+  .adminPortal .portalSidebar nav button { min-width: 0; min-height: 40px; height: 40px; justify-content: flex-start; flex-direction: row; font-size: 12px; }
+  .portalSidebar nav span { display: block; }
+  .portalSidebar .sideFiles { display: flex; margin-top: auto; font-size: 12px; }
+  .portalTopbar,
+  .adminPortal .portalTopbar { height: 56px; min-height: 56px; position: sticky; top: 0; z-index: 35; padding: 0 12px; }
+  .portalContent > .portalHero,
+  .portalContent > .pageHeading,
+  .portalContent > .compactHero,
+  .adminPortal .portalContent > .compactHero { margin: 10px 12px; }
+  .workerPortal .portalHero,
+  .adminPortal .adminHero { min-height: 92px; padding: 16px; border-radius: 10px; }
+  .workerPortal .portalHero h1,
+  .adminPortal .adminHero h1 { font-size: 20px; }
+  .metricGrid,
+  .adminPortal .metricGrid { grid-template-columns: 1fr 1fr; gap: 9px; margin: 0 12px 12px; }
+  .metricGrid article,
+  .adminPortal .metricGrid article { min-height: 85px; height: 85px; padding: 10px; }
+  .metricGrid b { font-size: 16px; }
+  .metricGrid span { font-size: 7px; }
+  .quickActions { grid-template-columns: repeat(3, 1fr); margin: 0 12px 12px; gap: 6px; }
+  .quickActions button { min-height: 64px; padding: 8px 4px; flex-direction: column; align-items: center; text-align: center; }
+  .adminPortal .portalPanel { margin: 0 12px 12px; padding: 14px; }
+  .adminPortal .portalTable article { grid-template-columns: 1fr; gap: 9px; padding: 13px; }
+  .adminPortal .rowActions { display: grid; grid-template-columns: 1fr 1fr; }
 }

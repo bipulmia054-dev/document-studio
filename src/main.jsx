@@ -2286,8 +2286,8 @@ function Access({ setupRequired, onAccess }) {
   return (
     <div className="accessPage">
       <form className="accessCard" onSubmit={submit}>
-        <div className="brandMark accessLogo" aria-hidden="true">K</div>
-        <small>KIDIBO • DOCUMENT STUDIO</small>
+        <img className="cityLogo accessLogo" src="/city-bank-logo.png" alt="City Bank" />
+        <small>CITY AGENT BANKING • SECURE ACCESS</small>
         <h1>{setupRequired ? "Admin Login তৈরি করুন" : mode === "register" ? "Worker Registration" : "স্বাগতম"}</h1>
         <p>
           {setupRequired
@@ -2987,10 +2987,10 @@ function App() {
     <>
       <header>
         <div className="brand">
-          <div className="brandMark" aria-hidden="true">K</div>
+          <img className="cityLogo" src="/city-bank-logo.png" alt="City Bank" />
           <div>
-            <b>KIDIBO Document Studio</b>
-            <small>SMART DOCUMENT WORKSPACE</small>
+            <b>Amjhupi Agent Banking</b>
+            <small>DOCUMENT COLLECTION SYSTEM</small>
           </div>
         </div>
         <div className="headerActions">

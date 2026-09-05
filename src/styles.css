@@ -1889,6 +1889,43 @@ header { min-height:76px; border-bottom-color:var(--kidibo-line); background:#ff
 .metricGrid svg,.quickActions svg { background:#e5f4f2; color:var(--kidibo-teal); } .metricGrid b { color:var(--kidibo-ink); }
 .statusTag,.codeBadge { border-radius:999px; } .bottomNav { border-color:var(--kidibo-line); }
 @media (max-width:700px) { .accessPage { padding:14px; place-items:start center; } .accessCard { margin-top:5vh; padding:28px 20px; border-radius:22px; } .accessCard h1 { font-size:31px; } .portalWithSidebar { width:calc(100% - 14px); } }
+
+/* City Agent Banking dashboard refresh */
+:root { --city-red:#d71920; --city-dark:#751116; --city-soft:#fff1f2; --city-line:#ead9da; --city-ink:#242326; }
+body { background:linear-gradient(135deg,#fff,#f8f8f9 55%,#fff4f4); color:var(--city-ink); }
+.brand b { color:var(--city-dark); }
+.brandMark { display:none; }
+.accessPage { background:radial-gradient(circle at 15% 8%,#ffe1e3 0,transparent 30%),#fbfbfc; }
+.accessCard { border-color:#f1dcde; box-shadow:0 25px 70px #54101318; }
+.accessCard > small { color:var(--city-red); }
+.accessCard input:focus,.accessCard select:focus,.accessCard textarea:focus { border-color:var(--city-red); box-shadow:0 0 0 4px #d7192020; }
+.primary { background:linear-gradient(135deg,#d71920,#a90f15) !important; box-shadow:0 10px 24px #d7192030 !important; }
+.portalSidebar { background:linear-gradient(180deg,#2a2527,#171416); }
+.portalSidebar nav button.active { background:linear-gradient(135deg,#d71920,#a90f15); box-shadow:0 9px 22px #d7192040; }
+.portalTopbar,.portalPanel,.metricGrid article,.quickActions button { border-color:var(--city-line); }
+.workerPortal .portalHero,.workerPortal .pageHeading,.adminHero { background:linear-gradient(120deg,#8f1016,#d71920 72%,#ed5b60); }
+.metricGrid svg,.quickActions svg { background:var(--city-soft); color:var(--city-red); }
+.metricGrid b { color:var(--city-dark); }
+.sideBrand > button:first-child { width:52px; height:42px; background:#fff url('/city-bank-logo.png') center/contain no-repeat; border-radius:10px; }
+.sideBrand > button:first-child svg { display:none; }
+.sideBrand > button:first-child:hover { background-color:#fff; transform:translateY(-1px); }
+.sideBrand > button:nth-child(2) { display:none; }
+.mobileMenuButton { background:var(--city-soft); color:var(--city-red); }
+.bottomNav { border-color:var(--city-line); }
+@media (max-width:700px) {
+  .portalSidebar { position:fixed; left:0; right:auto; top:0; bottom:0; width:min(278px,84vw); min-height:100vh; padding:16px 12px; border-radius:0 22px 22px 0; transform:translateX(0); transition:transform .24s ease; z-index:90; }
+  .portalWithSidebar.sidebarCollapsed .portalSidebar { transform:translateX(-110%); }
+  .portalSidebar .sideBrand { display:flex; padding:6px 6px 18px; }
+  .portalSidebar .sideBrand > div { display:block; }
+  .portalSidebar nav { display:grid; overflow:visible; margin-top:14px; }
+  .portalSidebar nav button { min-width:0; min-height:46px; flex-direction:row; justify-content:flex-start; gap:11px; padding:10px 12px; font-size:14px; }
+  .portalSidebar nav span { display:block; }
+  .portalSidebar .sideFiles { display:flex; margin-top:auto; font-size:14px; justify-content:flex-start; }
+  .mobileMenuButton { display:grid; background:#fff url('/city-bank-logo.png') center/30px auto no-repeat; border:1px solid #efd3d5; }
+  .mobileMenuButton svg { display:none; }
+  .portalContent { padding-bottom:18px; }
+  .portalTopbar { position:sticky; top:6px; }
+}
 .financeWorkerTable article{display:grid;grid-template-columns:minmax(180px,1.5fr) repeat(5,minmax(95px,1fr)) auto;gap:10px;align-items:center;padding:14px 0;border-bottom:1px solid #eee}.financeWorkerTable article>div small,.financeWorkerTable article p span{display:block;color:#777;font-size:10px}.financeWorkerTable article p{margin:0}.financeWorkerTable article button{border:1px solid #ecc3c6;background:#fff5f5;color:#a91218;border-radius:8px;padding:8px;font-weight:700}.statusTag.resubmitted{background:#e9e5ff;color:#5941a6}@media(max-width:900px){.financeWorkerTable article{grid-template-columns:1fr 1fr}.financeWorkerTable article>div,.financeWorkerTable article>button{grid-column:1/-1}}
 
 /* Admin control center refresh */
